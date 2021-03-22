@@ -22,7 +22,12 @@
 
         public virtual IQueryable<TEntity> AllAsNoTracking() => this.DbSet.AsNoTracking();
 
-        public virtual Task AddAsync(TEntity entity) => this.DbSet.AddAsync(entity).AsTask();
+        public virtual Task AddAsync(TEntity entity)
+        {
+
+
+            return this.DbSet.AddAsync(entity).AsTask();
+        }
 
         public virtual void Update(TEntity entity)
         {
@@ -36,7 +41,13 @@
         }
 
         public virtual void Delete(TEntity entity) => this.DbSet.Remove(entity);
-        public Task<int> SaveChangesAsync() => this.Context.SaveChangesAsync();
+        public async Task SaveChangesAsync()
+        {
+            using var transaction = this.Context.Database.BeginTransaction();
+            this.Context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Movies ON");
+            await this.Context.SaveChangesAsync();
+            transaction.Commit();
+        }
 
         public void Dispose()
         {

@@ -21,7 +21,6 @@
             using var services = app.ApplicationServices.CreateScope();
 
             var dbContext = services.ServiceProvider.GetService<MoviesDbContext>();
-
             dbContext.Database.Migrate();
         }
     }
