@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Movies.Server.Features.Movies.Models;
-using Movies.Server.Infrastructure.Services;
-using System.Threading.Tasks;
-
-namespace Movies.Server.Features.Movies
+﻿namespace Movies.Server.Features.Movies
 {
+    using System.Threading.Tasks;
+    using Features.Movies.Models;
+    using Infrastructure.Services;
+    using Microsoft.AspNetCore.Mvc;
+
     public class MoviesController : ApiController
     {
         private readonly IMovieService movies;
@@ -27,6 +27,7 @@ namespace Movies.Server.Features.Movies
             {
                 return this.Created(nameof(this.Add), model.MovieId);
             }
+
             return this.BadRequest(result.Error);
         }
 
@@ -41,6 +42,7 @@ namespace Movies.Server.Features.Movies
             {
                 return this.Accepted(nameof(this.Remove));
             }
+
             return this.BadRequest(result.Error);
         }
 

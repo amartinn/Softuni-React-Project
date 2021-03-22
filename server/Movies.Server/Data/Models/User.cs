@@ -1,27 +1,28 @@
 ﻿namespace Movies.Server.Data.Models
 {
-    using Microsoft.AspNetCore.Identity;
-    using Movies.Server.Data.Models.Base;
     using System;
     using System.Collections.Generic;
+    using Microsoft.AspNetCore.Identity;
+    using Movies.Server.Data.Models.Base;
 
     public class User : IdentityUser, IAuditInfo
     {
         public User()
         {
             this.Id = Guid.NewGuid().ToString();
-            this.UserMovies = new HashSet<UserMovies>();
+            this.Movies = new HashSet<Movie>();
             this.Comments = new HashSet<Comment>();
             this.Ratings = new HashSet<Rating>();
         }
 
-        public virtual IEnumerable<UserMovies> UserMovies { get; set; }
+        public virtual IEnumerable<Movie> Movies { get; set; }
 
         public virtual IEnumerable<Comment> Comments { get; set; }
 
         public virtual IEnumerable<Rating> Ratings { get; set; }
 
         public DateTime CreatedOn { get; set; }
+
         public DateTime? ModifiedOn { get; set; }
     }
 }

@@ -3,9 +3,9 @@
     using System.ComponentModel.DataAnnotations;
 
     using static Data.Validation.Comment;
+
     public class CommentRequestModel
     {
-
         [Required]
         [MaxLength(MaxBodyLength)]
         public string Body { get; set; }

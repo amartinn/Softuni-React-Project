@@ -1,5 +1,6 @@
 ﻿namespace Movies.Server.Infrastructure.Extensions
 {
+    using System.Text;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
@@ -7,14 +8,13 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.IdentityModel.Tokens;
     using Microsoft.OpenApi.Models;
-    using Data;
-    using Data.Models;
-    using System.Text;
-    using Features.Identity;
+    using Movies.Server.Data;
     using Movies.Server.Data.Common;
-    using Movies.Server.Infrastructure.Services;
-    using Movies.Server.Features.Movies;
+    using Movies.Server.Data.Models;
     using Movies.Server.Features.Comments;
+    using Movies.Server.Features.Identity;
+    using Movies.Server.Features.Movies;
+    using Movies.Server.Infrastructure.Services;
 
     public static class ServiceCollectionExtensions
     {
@@ -72,7 +72,7 @@
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(key),
                         ValidateIssuer = false,
-                        ValidateAudience = false
+                        ValidateAudience = false,
                     };
                 });
 
@@ -84,7 +84,6 @@
                 .AddTransient<IIdentityService, IdentityService>()
                 .AddTransient<ICommentService, CommentService>()
                 .AddTransient<IMovieService, MovieService>()
-                .AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>))
                 .AddScoped(typeof(IRepository<>), typeof(EfRepository<>))
                 .AddScoped<ICurrentUserService, CurrentUserService>();
 
@@ -96,7 +95,7 @@
                     new OpenApiInfo
                     {
                         Title = "My Movies API",
-                        Version = "v1"
+                        Version = "v1",
                     });
             });
 

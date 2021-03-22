@@ -1,83 +1,84 @@
 ﻿namespace Movies.Server.Features.Comments
 {
-    using Data.Common;
-    using Data.Models;
-    using Features.Movies;
-    using global::Movies.Server.Features.Comments.Models;
-    using Infrastructure.Services;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Data.Common;
+    using Data.Models;
+    using Features.Comments.Models;
+    using Infrastructure.Services;
 
     public class CommentService : ICommentService
     {
         private readonly IRepository<Comment> comments;
-        private readonly IMovieService movies;
-        private readonly IRepository<UserMovies> userMovies;
+        private readonly IRepository<Movie> movies;
 
-        public CommentService(IRepository<Comment> comments,
-            IMovieService movies, IRepository<UserMovies> userMovies)
+        public CommentService(
+            IRepository<Comment> comments,
+            IRepository<Movie> movies)
         {
             this.comments = comments;
             this.movies = movies;
-            this.userMovies = userMovies;
         }
+
         public async Task<Result> AddCommentToMovie(string userId, int movieId, string commentBody)
         {
-            if (!UserHasMovie(userId, movieId))
+            if (!this.UserHasMovie(userId, movieId))
             {
                 return "That movie is not present in user's favorite list";
             }
 
-            var dbMovieID = this.userMovies
+            var dbMovieID = this.movies
                 .All()
-                .FirstOrDefault(x => x.Movie.ExternalAPIId == movieId && x.UserId == userId)
-                ?.Movie.Id;
+                .FirstOrDefault(x => x.ExternalAPIId == movieId && x.UserId == userId).Id;
 
             var commentExists = this.comments.All()
-                .FirstOrDefault(x => x.CommentedById == userId && x.CommentedMovieId == dbMovieID.Value);
+                .FirstOrDefault(x => x.CommentedById == userId && x.CommentedMovieId == dbMovieID);
+
             if (commentExists == null)
             {
-                var comment = new Comment { Body = commentBody, CommentedById = userId, CommentedMovieId = dbMovieID.Value };
+                var comment = new Comment { Body = commentBody, CommentedById = userId, CommentedMovieId = dbMovieID };
                 await this.comments.AddAsync(comment);
                 await this.comments.SaveChangesAsync();
 
                 return true;
             }
+
             return "There is already a comment for that movie.";
         }
 
-        public IEnumerable<CommentListingServiceModel> All(string userId)
+        public IEnumerable<CommentListingServiceModel> GetCommentsByUserId(string userId)
             => this.comments.All().Where(x => x.CommentedById == userId)
             .Select(x => new CommentListingServiceModel
             {
                 CommentBody = x.Body,
-                MovieId = x.CommentedMovieId,
+                MovieId = x.CommentedMovie.ExternalAPIId,
             });
 
         public async Task<Result> UpdateComment(string userId, int movieId, string commentBody)
         {
-            if (!UserHasMovie(userId, movieId))
+            if (!this.UserHasMovie(userId, movieId))
             {
                 return "That movie is not present in user's favorite list";
             }
-            var dbMovieID = this.userMovies
+
+            var dbMovieId = this.movies
               .All()
-              .FirstOrDefault(x => x.Movie.ExternalAPIId == movieId && x.UserId == userId)
-              ?.Movie.Id;
+              .FirstOrDefault(x => x.ExternalAPIId == movieId && x.UserId == userId).Id;
 
             var comment = this.comments.All()
-                .FirstOrDefault(x => x.CommentedById == userId && x.CommentedMovieId == dbMovieID.Value);
+                .FirstOrDefault(x => x.CommentedById == userId && x.CommentedMovieId == dbMovieId);
             if (comment == null)
             {
                 return "There isnt a comment for that movie.";
             }
+
             comment.Body = commentBody;
             await this.comments.SaveChangesAsync();
             return true;
         }
 
         private bool UserHasMovie(string userId, int movieId)
-            => this.movies.GetMoviesByUserId(userId).Any(x => x.Id == movieId);
+            => this.movies.All().Any(x => x.UserId == userId && x.ExternalAPIId == movieId);
     }
 }

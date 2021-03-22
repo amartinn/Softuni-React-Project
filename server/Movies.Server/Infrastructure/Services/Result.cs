@@ -9,14 +9,14 @@
         public string Error { get; private set; }
 
         public static implicit operator Result(bool succeeded)
-            => new()
+            => new ()
             { Succeeded = succeeded };
 
         public static implicit operator Result(string error)
-            => new()
+            => new ()
             {
                 Succeeded = false,
-                Error = error
+                Error = error,
             };
     }
 }

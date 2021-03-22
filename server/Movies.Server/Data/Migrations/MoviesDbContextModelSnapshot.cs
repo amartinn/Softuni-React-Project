@@ -192,19 +192,20 @@ namespace Movies.Server.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
 
                     b.Property<int>("ExternalAPIId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Movies");
                 });
@@ -310,21 +311,6 @@ namespace Movies.Server.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("Movies.Server.Data.Models.UserMovies", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("MovieId")
-                        .HasColumnType("int");
-
-                    b.HasKey("UserId", "MovieId");
-
-                    b.HasIndex("MovieId");
-
-                    b.ToTable("UserMovies");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -381,7 +367,7 @@ namespace Movies.Server.Migrations
                     b.HasOne("Movies.Server.Data.Models.User", "CommentedBy")
                         .WithMany("Comments")
                         .HasForeignKey("CommentedById")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Movies.Server.Data.Models.Movie", "CommentedMovie")
@@ -395,12 +381,23 @@ namespace Movies.Server.Migrations
                     b.Navigation("CommentedMovie");
                 });
 
+            modelBuilder.Entity("Movies.Server.Data.Models.Movie", b =>
+                {
+                    b.HasOne("Movies.Server.Data.Models.User", "User")
+                        .WithMany("Movies")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Movies.Server.Data.Models.Rating", b =>
                 {
                     b.HasOne("Movies.Server.Data.Models.User", "RatedBy")
                         .WithMany("Ratings")
                         .HasForeignKey("RatedById")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Movies.Server.Data.Models.Movie", "RatedMovie")
@@ -414,41 +411,20 @@ namespace Movies.Server.Migrations
                     b.Navigation("RatedMovie");
                 });
 
-            modelBuilder.Entity("Movies.Server.Data.Models.UserMovies", b =>
-                {
-                    b.HasOne("Movies.Server.Data.Models.Movie", "Movie")
-                        .WithMany("UserMovies")
-                        .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Movies.Server.Data.Models.User", "User")
-                        .WithMany("UserMovies")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Movie");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Movies.Server.Data.Models.Movie", b =>
                 {
                     b.Navigation("Comments");
 
                     b.Navigation("Ratings");
-
-                    b.Navigation("UserMovies");
                 });
 
             modelBuilder.Entity("Movies.Server.Data.Models.User", b =>
                 {
                     b.Navigation("Comments");
 
-                    b.Navigation("Ratings");
+                    b.Navigation("Movies");
 
-                    b.Navigation("UserMovies");
+                    b.Navigation("Ratings");
                 });
 #pragma warning restore 612, 618
         }
