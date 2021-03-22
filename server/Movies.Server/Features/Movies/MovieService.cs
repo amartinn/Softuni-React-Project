@@ -39,7 +39,7 @@ namespace Movies.Server.Features.Movies
                 .Where(x => x.UserId == userId)
                 .Select(x => new MovieListingServiceModel
                 {
-                    Id = x.MovieId
+                    Id = x.Movie.ExternalAPIId,
                 })
                 .ToList();
 
