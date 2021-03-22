@@ -12,16 +12,10 @@ namespace Movies.Server.Features.Movies
 {
     public class MovieService : IMovieService
     {
-        private readonly IDeletableEntityRepository<Movie> movieRepository;
-        private readonly IRepository<User> userRepository;
         private readonly IRepository<UserMovies> userMoviesRepository;
 
-        public MovieService(IDeletableEntityRepository<Movie> movieRepository,
-            IRepository<User> userRepository,
-            IRepository<UserMovies> userMoviesRepository)
+        public MovieService(IRepository<UserMovies> userMoviesRepository)
         {
-            this.movieRepository = movieRepository;
-            this.userRepository = userRepository;
             this.userMoviesRepository = userMoviesRepository;
         }
         public async Task<Result> AddToFavorites(int movieId, string userId)
@@ -31,9 +25,8 @@ namespace Movies.Server.Features.Movies
             {
                 return "The movie is already added to favorites.";
             }
-            await movieRepository.AddAsync(new Movie { Id = movieId });
-            await movieRepository.SaveChangesAsync();
-            var userMovies = new UserMovies { MovieId = movieId, UserId = userId };
+            var movie = new Movie { ExternalAPIId = movieId };
+            var userMovies = new UserMovies { Movie = movie, UserId = userId };
             await this.userMoviesRepository.AddAsync(userMovies);
             await this.userMoviesRepository.SaveChangesAsync();
 
@@ -56,7 +49,9 @@ namespace Movies.Server.Features.Movies
             {
                 return "The movie doesnt exists in the favorites list!";
             }
-            var userMovies = this.userMoviesRepository.All().FirstOrDefault(x => x.UserId == userId && x.MovieId == movieId);
+            var userMovies = this.userMoviesRepository
+                .All()
+                .FirstOrDefault(x => x.UserId == userId && x.Movie.ExternalAPIId == movieId);
 
             this.userMoviesRepository.Delete(userMovies);
             await this.userMoviesRepository.SaveChangesAsync();
@@ -66,6 +61,6 @@ namespace Movies.Server.Features.Movies
 
         private bool UserHasMovie(int movieId, string userId)
             => this.userMoviesRepository.All().Where(x => x.UserId == userId)
-                .Any(x => x.MovieId == movieId);
+                .Any(x => x.Movie.ExternalAPIId == movieId);
     }
 }

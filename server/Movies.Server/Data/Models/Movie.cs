@@ -5,6 +5,7 @@
 
     public class Movie : BaseDeletableModel<int>
     {
+        public int ExternalAPIId { get; set; }
         public IEnumerable<UserMovies> UserMovies { get; set; } = new HashSet<UserMovies>();
 
         public IEnumerable<Rating> Ratings { get; } = new HashSet<Rating>();

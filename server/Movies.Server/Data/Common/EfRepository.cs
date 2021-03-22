@@ -41,13 +41,7 @@
         }
 
         public virtual void Delete(TEntity entity) => this.DbSet.Remove(entity);
-        public async Task SaveChangesAsync()
-        {
-            using var transaction = this.Context.Database.BeginTransaction();
-            this.Context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Movies ON");
-            await this.Context.SaveChangesAsync();
-            transaction.Commit();
-        }
+        public Task SaveChangesAsync() => this.Context.SaveChangesAsync();
 
         public void Dispose()
         {
