@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Movies.Server.Data;
 
 namespace Movies.Server.Migrations
 {
     [DbContext(typeof(MoviesDbContext))]
-    partial class MoviesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210322125200_add movie, rating and comment models")]
+    partial class addmovieratingandcommentmodels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -209,11 +211,8 @@ namespace Movies.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("RatedMovieId")
+                    b.Property<int>("RatedMovieId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("RatedMovieId1")
                         .HasColumnType("int");
 
                     b.Property<int>("Value")
@@ -223,7 +222,7 @@ namespace Movies.Server.Migrations
 
                     b.HasIndex("RatedById");
 
-                    b.HasIndex("RatedMovieId1");
+                    b.HasIndex("RatedMovieId");
 
                     b.ToTable("Rating");
                 });
@@ -386,7 +385,7 @@ namespace Movies.Server.Migrations
 
                     b.HasOne("Movies.Server.Data.Models.Movie", "RatedMovie")
                         .WithMany("Ratings")
-                        .HasForeignKey("RatedMovieId1");
+                        .HasForeignKey("RatedMovieId");
 
                     b.Navigation("RatedBy");
 

@@ -30,6 +30,13 @@
             return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<UserMovies>()
+                .HasKey(um => new { um.UserId, um.MovieId });
+
+            base.OnModelCreating(builder);
+        }
 
         private void ApplyAuditInformation()
            => this.ChangeTracker
