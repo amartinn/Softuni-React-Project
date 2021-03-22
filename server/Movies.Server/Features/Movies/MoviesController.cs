@@ -39,9 +39,19 @@ namespace Movies.Server.Features.Movies
 
             if (result.Succeeded)
             {
-                return this.Accepted(nameof(this.Add), model.MovieId);
+                return this.Accepted(nameof(this.Add));
             }
             return this.BadRequest(result.Error);
+        }
+
+        [HttpGet]
+        [Route(nameof(All))]
+        public ActionResult All()
+        {
+            var userId = this.currentUser.GetId();
+
+            var movies = this.movies.GetMoviesByUserId(userId);
+            return this.Ok(movies);
         }
     }
 }

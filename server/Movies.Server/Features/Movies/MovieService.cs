@@ -40,17 +40,15 @@ namespace Movies.Server.Features.Movies
             return true;
         }
 
-        public async Task<IEnumerable<MovieListingServiceModel>> GetMoviesByUserId(string userId)
-            => await this.userRepository
-            .All()
-            .FirstOrDefault(x => x.Id == userId)
-            .UserMovies
-            .Select(x => new MovieListingServiceModel
-            {
-                Id = x.MovieId
-            })
-            .AsQueryable()
-            .ToListAsync();
+        public IEnumerable<MovieListingServiceModel> GetMoviesByUserId(string userId)
+            => this.userMoviesRepository
+                .All()
+                .Where(x => x.UserId == userId)
+                .Select(x => new MovieListingServiceModel
+                {
+                    Id = x.MovieId
+                })
+                .ToList();
 
         public async Task<Result> RemoveFromFavorites(int movieId, string userId)
         {

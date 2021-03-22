@@ -11,6 +11,6 @@
 
         Task<Result> RemoveFromFavorites(int movieId, string userId);
 
-        Task<IEnumerable<MovieListingServiceModel>> GetMoviesByUserId(string userId);
+        IEnumerable<MovieListingServiceModel> GetMoviesByUserId(string userId);
     }
 }
