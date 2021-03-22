@@ -1,9 +1,9 @@
 ﻿namespace Movies.Server.Data.Models
 {
-    using Microsoft.AspNetCore.Identity;
-    using Movies.Server.Data.Models.Base;
     using System;
     using System.Collections.Generic;
+    using Microsoft.AspNetCore.Identity;
+    using Movies.Server.Data.Models.Base;
 
     public class User : IdentityUser, IAuditInfo
     {
@@ -22,6 +22,7 @@
         public virtual IEnumerable<Rating> Ratings { get; set; }
 
         public DateTime CreatedOn { get; set; }
+
         public DateTime? ModifiedOn { get; set; }
     }
 }

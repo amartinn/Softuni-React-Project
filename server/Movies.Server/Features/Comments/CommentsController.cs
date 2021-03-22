@@ -1,13 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Movies.Server.Features.Comments.Models;
-using Movies.Server.Infrastructure.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Movies.Server.Features.Comments
+﻿namespace Movies.Server.Features.Comments
 {
+    using System.Threading.Tasks;
+    using Features.Comments.Models;
+    using Infrastructure.Services;
+    using Microsoft.AspNetCore.Mvc;
+
     public class CommentsController : ApiController
     {
         private readonly ICurrentUserService currentUser;

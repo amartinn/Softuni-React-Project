@@ -1,6 +1,7 @@
 ﻿namespace Movies.Server.Features.Movies.Models
 {
     using System.ComponentModel.DataAnnotations;
+
     public class MovieListingServiceModel
     {
         [Required]

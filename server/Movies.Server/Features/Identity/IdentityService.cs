@@ -1,14 +1,15 @@
 ﻿namespace Movies.Server.Features.Identity
 {
-    using Microsoft.IdentityModel.Tokens;
     using System;
     using System.IdentityModel.Tokens.Jwt;
     using System.Security.Claims;
     using System.Text;
+    using Microsoft.IdentityModel.Tokens;
 
     public class IdentityService : IIdentityService
     {
-        private const int expirationDays = 7;
+        private const int ExpirationDays = 7;
+
         public string GenerateJwtToken(string userId, string userName, string secret)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -19,10 +20,10 @@
                 Subject = new ClaimsIdentity(new[]
                 {
                     new Claim(ClaimTypes.NameIdentifier, userId),
-                    new Claim(ClaimTypes.Name, userName)
+                    new Claim(ClaimTypes.Name, userName),
                 }),
-                Expires = DateTime.UtcNow.AddDays(expirationDays),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                Expires = DateTime.UtcNow.AddDays(ExpirationDays),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var encryptedToken = tokenHandler.WriteToken(token);

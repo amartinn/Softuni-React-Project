@@ -1,12 +1,13 @@
 ﻿namespace Movies.Server.Features.Identity
 {
+    using System.Threading.Tasks;
+    using Data.Models;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Options;
-    using Data.Models;
     using Models;
-    using System.Threading.Tasks;
+
     public class IdentityController : ApiController
     {
         private readonly UserManager<User> userManager;
@@ -31,16 +32,16 @@
             var user = new User
             {
                 Email = model.Email,
-                UserName = model.UserName
+                UserName = model.UserName,
             };
 
             var result = await this.userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
             {
-                return BadRequest(result.Errors);
+                return this.BadRequest(result.Errors);
             }
 
-            return Ok();
+            return this.Ok();
         }
 
         [HttpPost]
@@ -51,13 +52,13 @@
             var user = await this.userManager.FindByNameAsync(model.UserName);
             if (user == null)
             {
-                return Unauthorized();
+                return this.Unauthorized();
             }
 
             var passwordValid = await this.userManager.CheckPasswordAsync(user, model.Password);
             if (!passwordValid)
             {
-                return Unauthorized();
+                return this.Unauthorized();
             }
 
             var token = this.identity.GenerateJwtToken(
@@ -67,7 +68,7 @@
 
             return new LoginResponseModel
             {
-                Token = token
+                Token = token,
             };
         }
     }

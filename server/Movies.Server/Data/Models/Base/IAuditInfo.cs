@@ -1,6 +1,7 @@
 ﻿namespace Movies.Server.Data.Models.Base
 {
     using System;
+
     public interface IAuditInfo
     {
         DateTime CreatedOn { get; set; }
