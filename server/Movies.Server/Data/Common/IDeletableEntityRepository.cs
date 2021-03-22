@@ -14,7 +14,5 @@
         void HardDelete(TEntity entity);
 
         void Undelete(TEntity entity);
-
-        void Delete(TEntity entity);
     }
 }

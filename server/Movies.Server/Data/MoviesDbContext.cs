@@ -17,6 +17,14 @@
 
         }
 
+        public DbSet<Movie> Movies { get; set; }
+
+        public DbSet<Comment> Comments { get; set; }
+
+        public DbSet<Rating> Ratings { get; set; }
+
+        public DbSet<UserMovies> UserMovies { get; set; }
+
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
             this.ApplyAuditInformation();

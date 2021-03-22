@@ -173,7 +173,7 @@ namespace Movies.Server.Migrations
 
                     b.HasIndex("CommentedMovieId");
 
-                    b.ToTable("Comment");
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("Movies.Server.Data.Models.Movie", b =>
@@ -186,12 +186,18 @@ namespace Movies.Server.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Movie");
+                    b.ToTable("Movies");
                 });
 
             modelBuilder.Entity("Movies.Server.Data.Models.Rating", b =>
@@ -209,11 +215,7 @@ namespace Movies.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("RatedMovieId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("RatedMovieId1")
+                    b.Property<int>("RatedMovieId")
                         .HasColumnType("int");
 
                     b.Property<int>("Value")
@@ -223,9 +225,9 @@ namespace Movies.Server.Migrations
 
                     b.HasIndex("RatedById");
 
-                    b.HasIndex("RatedMovieId1");
+                    b.HasIndex("RatedMovieId");
 
-                    b.ToTable("Rating");
+                    b.ToTable("Ratings");
                 });
 
             modelBuilder.Entity("Movies.Server.Data.Models.User", b =>
@@ -386,7 +388,9 @@ namespace Movies.Server.Migrations
 
                     b.HasOne("Movies.Server.Data.Models.Movie", "RatedMovie")
                         .WithMany("Ratings")
-                        .HasForeignKey("RatedMovieId1");
+                        .HasForeignKey("RatedMovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("RatedBy");
 

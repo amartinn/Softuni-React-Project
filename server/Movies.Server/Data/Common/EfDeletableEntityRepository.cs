@@ -22,7 +22,7 @@
         public IQueryable<TEntity> AllAsNoTrackingWithDeleted() => base.AllAsNoTracking().IgnoreQueryFilters();
 
 
-        public void HardDelete(TEntity entity) => this.DbSet.Remove(entity);
+        public void HardDelete(TEntity entity) => base.Delete(entity);
 
         public void Undelete(TEntity entity)
         {
@@ -31,7 +31,7 @@
             this.Update(entity);
         }
 
-        public virtual void Delete(TEntity entity)
+        public override void Delete(TEntity entity)
         {
             entity.IsDeleted = true;
             entity.DeletedOn = DateTime.UtcNow;
