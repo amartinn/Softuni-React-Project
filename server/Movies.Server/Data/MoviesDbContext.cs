@@ -63,20 +63,6 @@
                .ToList()
                .ForEach(entry =>
                {
-
-                   if (entry.Entity is IDeletableEntity deletableEntity)
-                   {
-                       if (entry.State == EntityState.Deleted)
-                       {
-                           deletableEntity.DeletedOn = DateTime.UtcNow;
-                           deletableEntity.IsDeleted = true;
-
-                           entry.State = EntityState.Modified;
-
-                           return;
-                       }
-                   }
-
                    if (entry.Entity is IAuditInfo entity)
                    {
                        if (entry.State == EntityState.Added)

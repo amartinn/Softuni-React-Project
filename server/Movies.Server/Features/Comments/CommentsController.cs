@@ -52,7 +52,7 @@ namespace Movies.Server.Features.Comments
         public IActionResult All()
         {
             var userId = this.currentUser.GetId();
-            var comments = this.comments.All(userId);
+            var comments = this.comments.GetCommentsByUserId(userId);
             return this.Ok(comments);
         }
     }

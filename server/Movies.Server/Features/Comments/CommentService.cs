@@ -45,12 +45,12 @@
             return "There is already a comment for that movie.";
         }
 
-        public IEnumerable<CommentListingServiceModel> All(string userId)
+        public IEnumerable<CommentListingServiceModel> GetCommentsByUserId(string userId)
             => this.comments.All().Where(x => x.CommentedById == userId)
             .Select(x => new CommentListingServiceModel
             {
                 CommentBody = x.Body,
-                MovieId = x.CommentedMovieId,
+                MovieId = x.CommentedMovie.ExternalAPIId,
             });
 
         public async Task<Result> UpdateComment(string userId, int movieId, string commentBody)
