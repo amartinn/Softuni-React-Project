@@ -11,6 +11,7 @@
     using Data.Models;
     using System.Text;
     using Features.Identity;
+    using Movies.Server.Data.Common;
 
     public static class ServiceCollectionExtensions
     {
@@ -76,7 +77,9 @@
 
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
             => services
-                .AddTransient<IIdentityService, IdentityService>();
+                .AddTransient<IIdentityService, IdentityService>()
+                .AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>))
+                .AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 
         public static IServiceCollection AddSwagger(this IServiceCollection services)
             => services.AddSwaggerGen(c =>
