@@ -1,15 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Movies.Server.Data.Common;
-using Movies.Server.Data.Models;
-using Movies.Server.Features.Movies.Models;
-using Movies.Server.Infrastructure.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Movies.Server.Features.Movies
+﻿namespace Movies.Server.Features.Movies
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Data.Common;
+    using Data.Models;
+    using Features.Movies.Models;
+    using Infrastructure.Services;
+
     public class MovieService : IMovieService
     {
         private readonly IRepository<Movie> movies;
@@ -18,13 +16,14 @@ namespace Movies.Server.Features.Movies
         {
             this.movies = movies;
         }
+
         public async Task<Result> AddToFavorites(int movieId, string userId)
         {
-
             if (this.UserHasMovie(movieId, userId))
             {
                 return "The movie is already added to favorites.";
             }
+
             var movie = new Movie { ExternalAPIId = movieId, UserId = userId };
             await this.movies.AddAsync(movie);
             await this.movies.SaveChangesAsync();
@@ -48,6 +47,7 @@ namespace Movies.Server.Features.Movies
             {
                 return "The movie doesnt exists in the favorites list!";
             }
+
             var movie = this.movies
                 .All()
                 .FirstOrDefault(x => x.UserId == userId && x.ExternalAPIId == movieId);

@@ -1,9 +1,10 @@
 ﻿namespace Movies.Server.Features.Movies
 {
-    using Models;
-    using Infrastructure.Services;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+
+    using Features.Movies.Models;
+    using Infrastructure.Services;
 
     public interface IMovieService
     {

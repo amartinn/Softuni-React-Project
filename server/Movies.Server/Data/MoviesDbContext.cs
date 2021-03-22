@@ -1,20 +1,19 @@
 ﻿namespace Movies.Server.Data
 {
-    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore;
-    using Models;
-    using Models.Base;
     using System;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore;
+    using Models;
+    using Models.Base;
 
     public class MoviesDbContext : IdentityDbContext<User>
     {
         public MoviesDbContext(DbContextOptions<MoviesDbContext> options)
             : base(options)
         {
-
         }
 
         public DbSet<Movie> Movies { get; set; }
@@ -29,7 +28,8 @@
 
             return base.SaveChanges(acceptAllChangesOnSuccess);
         }
-        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = new CancellationToken())
+
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
         {
             this.ApplyAuditInformation();
 
@@ -38,7 +38,6 @@
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-
             builder.Entity<User>()
                 .HasMany(x => x.Movies)
                 .WithOne(x => x.User)

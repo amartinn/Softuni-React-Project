@@ -1,9 +1,8 @@
 ﻿namespace Movies.Server.Data.Models
 {
-    using Movies.Server.Data.Models.Base;
     using System;
     using System.ComponentModel.DataAnnotations;
-
+    using Movies.Server.Data.Models.Base;
     using static Validation.Rating;
 
     public class Rating : BaseModel<string>
@@ -21,6 +20,5 @@
         public int RatedMovieId { get; set; }
 
         public virtual Movie RatedMovie { get; set; }
-
     }
 }
