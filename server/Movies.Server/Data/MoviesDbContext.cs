@@ -43,6 +43,11 @@
             builder.Entity<UserMovies>()
                 .HasKey(um => new { um.UserId, um.MovieId });
 
+            builder.Entity<Movie>()
+                .HasMany(x => x.UserMovies)
+                .WithOne(x => x.Movie)
+                .OnDelete(DeleteBehavior.Cascade);
+
             base.OnModelCreating(builder);
         }
 

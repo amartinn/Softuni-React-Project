@@ -39,7 +39,7 @@ namespace Movies.Server.Features.Movies
 
             if (result.Succeeded)
             {
-                return this.Accepted(nameof(this.Add));
+                return this.Accepted(nameof(this.Remove));
             }
             return this.BadRequest(result.Error);
         }
