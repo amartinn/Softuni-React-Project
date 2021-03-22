@@ -10,12 +10,12 @@
         public User()
         {
             this.Id = Guid.NewGuid().ToString();
-            this.UserMovies = new HashSet<UserMovies>();
+            this.Movies = new HashSet<Movie>();
             this.Comments = new HashSet<Comment>();
             this.Ratings = new HashSet<Rating>();
         }
 
-        public virtual IEnumerable<UserMovies> UserMovies { get; set; }
+        public virtual IEnumerable<Movie> Movies { get; set; }
 
         public virtual IEnumerable<Comment> Comments { get; set; }
 

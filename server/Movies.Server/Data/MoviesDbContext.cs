@@ -23,8 +23,6 @@
 
         public DbSet<Rating> Ratings { get; set; }
 
-        public DbSet<UserMovies> UserMovies { get; set; }
-
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
             this.ApplyAuditInformation();
@@ -40,12 +38,20 @@
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<UserMovies>()
-                .HasKey(um => new { um.UserId, um.MovieId });
 
-            builder.Entity<Movie>()
-                .HasMany(x => x.UserMovies)
-                .WithOne(x => x.Movie)
+            builder.Entity<User>()
+                .HasMany(x => x.Movies)
+                .WithOne(x => x.User)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<User>()
+                .HasMany(x => x.Comments)
+                .WithOne(x => x.CommentedBy)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<User>()
+                .HasMany(x => x.Ratings)
+                .WithOne(x => x.RatedBy)
                 .OnDelete(DeleteBehavior.Cascade);
 
             base.OnModelCreating(builder);
