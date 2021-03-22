@@ -35,6 +35,7 @@
             entry.State = EntityState.Modified;
         }
 
+        public virtual void Delete(TEntity entity) => this.DbSet.Remove(entity);
         public Task<int> SaveChangesAsync() => this.Context.SaveChangesAsync();
 
         public void Dispose()
@@ -42,7 +43,6 @@
             this.Dispose(true);
             GC.SuppressFinalize(this);
         }
-
         protected virtual void Dispose(bool disposing)
         {
             if (disposing)

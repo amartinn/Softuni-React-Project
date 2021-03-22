@@ -3,7 +3,7 @@
     using Movies.Server.Data.Models.Base;
     using System.Collections.Generic;
 
-    public class Movie : BaseModel<int>
+    public class Movie : BaseDeletableModel<int>
     {
         public IEnumerable<UserMovies> UserMovies { get; set; } = new HashSet<UserMovies>();
 
