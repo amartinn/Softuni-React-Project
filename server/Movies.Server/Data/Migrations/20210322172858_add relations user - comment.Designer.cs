@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Movies.Server.Data;
 
 namespace Movies.Server.Migrations
 {
     [DbContext(typeof(MoviesDbContext))]
-    partial class MoviesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210322172858_add relations user - comment")]
+    partial class addrelationsusercomment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -160,10 +162,6 @@ namespace Movies.Server.Migrations
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
-                    b.Property<string>("CommentedById")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("CommentedMovieId")
                         .HasColumnType("int");
 
@@ -173,11 +171,15 @@ namespace Movies.Server.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("RatedById")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("CommentedById");
-
                     b.HasIndex("CommentedMovieId");
+
+                    b.HasIndex("RatedById");
 
                     b.ToTable("Comments");
                 });
@@ -378,21 +380,21 @@ namespace Movies.Server.Migrations
 
             modelBuilder.Entity("Movies.Server.Data.Models.Comment", b =>
                 {
-                    b.HasOne("Movies.Server.Data.Models.User", "CommentedBy")
-                        .WithMany("Comments")
-                        .HasForeignKey("CommentedById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Movies.Server.Data.Models.Movie", "CommentedMovie")
                         .WithMany("Comments")
                         .HasForeignKey("CommentedMovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("CommentedBy");
+                    b.HasOne("Movies.Server.Data.Models.User", "RatedBy")
+                        .WithMany("Comments")
+                        .HasForeignKey("RatedById")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("CommentedMovie");
+
+                    b.Navigation("RatedBy");
                 });
 
             modelBuilder.Entity("Movies.Server.Data.Models.Rating", b =>

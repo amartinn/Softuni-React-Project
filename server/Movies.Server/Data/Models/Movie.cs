@@ -6,10 +6,10 @@
     public class Movie : BaseDeletableModel<int>
     {
         public int ExternalAPIId { get; set; }
-        public IEnumerable<UserMovies> UserMovies { get; set; } = new HashSet<UserMovies>();
+        public virtual IEnumerable<UserMovies> UserMovies { get; set; } = new HashSet<UserMovies>();
 
-        public IEnumerable<Rating> Ratings { get; } = new HashSet<Rating>();
+        public virtual IEnumerable<Rating> Ratings { get; } = new HashSet<Rating>();
 
-        public IEnumerable<Comment> Comments { get; } = new HashSet<Comment>();
+        public virtual IEnumerable<Comment> Comments { get; } = new HashSet<Comment>();
     }
 }

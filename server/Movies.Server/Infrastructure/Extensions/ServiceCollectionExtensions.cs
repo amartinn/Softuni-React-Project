@@ -14,6 +14,7 @@
     using Movies.Server.Data.Common;
     using Movies.Server.Infrastructure.Services;
     using Movies.Server.Features.Movies;
+    using Movies.Server.Features.Comments;
 
     public static class ServiceCollectionExtensions
     {
@@ -31,6 +32,7 @@
             IConfiguration configuration)
             => services
                 .AddDbContext<MoviesDbContext>(options => options
+                    .UseLazyLoadingProxies()
                     .UseSqlServer(configuration.GetDefaultConnectionString()));
 
         public static IServiceCollection AddIdentity(this IServiceCollection services)
@@ -80,6 +82,7 @@
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
             => services
                 .AddTransient<IIdentityService, IdentityService>()
+                .AddTransient<ICommentService, CommentService>()
                 .AddTransient<IMovieService, MovieService>()
                 .AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>))
                 .AddScoped(typeof(IRepository<>), typeof(EfRepository<>))

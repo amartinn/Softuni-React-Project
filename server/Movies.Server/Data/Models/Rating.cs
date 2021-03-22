@@ -15,12 +15,12 @@
         [Required]
         public string RatedById { get; set; }
 
-        public User RatedBy { get; set; }
+        public virtual User RatedBy { get; set; }
 
         [Required]
         public int RatedMovieId { get; set; }
 
-        public Movie RatedMovie { get; set; }
+        public virtual Movie RatedMovie { get; set; }
 
     }
 }
