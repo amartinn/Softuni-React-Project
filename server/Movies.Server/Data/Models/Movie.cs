@@ -2,11 +2,15 @@
 {
     using Movies.Server.Data.Models.Base;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
     public class Movie : BaseDeletableModel<int>
     {
         public int ExternalAPIId { get; set; }
-        public virtual IEnumerable<UserMovies> UserMovies { get; set; } = new HashSet<UserMovies>();
+
+        [Required]
+        public string UserId { get; set; }
+        public virtual User User { get; set; }
 
         public virtual IEnumerable<Rating> Ratings { get; } = new HashSet<Rating>();
 
