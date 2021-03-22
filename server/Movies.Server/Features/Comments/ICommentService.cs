@@ -10,6 +10,6 @@
 
         public Task<Result> UpdateComment(string userId, int movieId, string commentBody);
 
-        public IEnumerable<CommentListingServiceModel> All(string userId);
+        public IEnumerable<CommentListingServiceModel> GetCommentsByUserId(string userId);
     }
 }

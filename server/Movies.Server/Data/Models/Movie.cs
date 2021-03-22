@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    public class Movie : BaseDeletableModel<int>
+    public class Movie : BaseModel<int>
     {
         public int ExternalAPIId { get; set; }
 

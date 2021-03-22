@@ -84,7 +84,6 @@
                 .AddTransient<IIdentityService, IdentityService>()
                 .AddTransient<ICommentService, CommentService>()
                 .AddTransient<IMovieService, MovieService>()
-                .AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>))
                 .AddScoped(typeof(IRepository<>), typeof(EfRepository<>))
                 .AddScoped<ICurrentUserService, CurrentUserService>();
 
