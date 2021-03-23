@@ -1,6 +1,14 @@
 ﻿namespace Movies.Server.Infrastructure.Extensions
 {
     using System.Text;
+    using Data;
+    using Data.Common;
+    using Data.Models;
+    using Features.Comments;
+    using Features.Identity;
+    using Features.Movies;
+    using Features.Ratings;
+    using Infrastructure.Services;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
@@ -8,13 +16,6 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.IdentityModel.Tokens;
     using Microsoft.OpenApi.Models;
-    using Movies.Server.Data;
-    using Movies.Server.Data.Common;
-    using Movies.Server.Data.Models;
-    using Movies.Server.Features.Comments;
-    using Movies.Server.Features.Identity;
-    using Movies.Server.Features.Movies;
-    using Movies.Server.Infrastructure.Services;
 
     public static class ServiceCollectionExtensions
     {
@@ -81,6 +82,7 @@
 
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
             => services
+                .AddTransient<IRatingService, RatingService>()
                 .AddTransient<IIdentityService, IdentityService>()
                 .AddTransient<ICommentService, CommentService>()
                 .AddTransient<IMovieService, MovieService>()
