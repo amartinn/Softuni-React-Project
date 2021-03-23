@@ -1,0 +1,17 @@
+.footer{
+    text-align: center;
+    color: var(--base-text-color);
+}
+.footer-title{
+    font-family: var(--secondary-font);
+    padding:10px;
+    font-size: 24px;
+}
+.footer-inner-title{
+    font-family: var(--secondary-font);
+}
+.footer-link{
+    margin-left: 10px;
+    text-decoration: none;
+    color: var(--hover);
+}
