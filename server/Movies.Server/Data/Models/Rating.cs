@@ -7,6 +7,11 @@
 
     public class Rating : BaseModel<string>
     {
+        public Rating()
+        {
+            this.Id = Guid.NewGuid().ToString();
+        }
+
         [Required]
         [Range(MinValue, MaxValue)]
         public int Value { get; set; }
