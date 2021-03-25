@@ -26,6 +26,7 @@ const links = [
 	},
 	{
 		title: 'My Movies',
+		auth: true,
 		links: [
 			{
 				to: '/recent',

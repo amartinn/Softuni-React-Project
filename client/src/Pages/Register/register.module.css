@@ -1,0 +1,13 @@
+.utilities{
+    text-align: center;
+    display: block;
+    font-size: 18px;
+    color: var(--base-text-color);
+    font-family: var(--primary-font);
+}
+.utilities-link{
+    color: var(--hover);
+    font-family: var(--primary-font);
+    text-decoration: none;
+    margin-left: 5px;
+}

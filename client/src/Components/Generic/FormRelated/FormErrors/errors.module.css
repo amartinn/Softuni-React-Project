@@ -1,0 +1,7 @@
+.error{
+    color: var(--hover);
+    display: block;
+    padding:10px;
+    font-family: var(--primary-font);
+    margin-bottom: 30px;
+}
