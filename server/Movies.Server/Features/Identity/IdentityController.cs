@@ -1,12 +1,16 @@
 ﻿namespace Movies.Server.Features.Identity
 {
+    using System.Linq;
     using System.Threading.Tasks;
     using Data.Models;
+    using global::Movies.Server.Infrastructure.Utilities;
+    using Infrastructure.Services;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Options;
     using Models;
+    using static Infrastructure.ConstantMessages;
 
     public class IdentityController : ApiController
     {
@@ -38,10 +42,12 @@
             var result = await this.userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
             {
-                return this.BadRequest(result.Errors);
+                var error = result.Errors.ToList()[0].Description;
+                return this.BadRequest(new ErrorResponseModel { Error = error });
             }
 
-            return this.Ok();
+            var response = new SuccessResponseModel { Message = Success.RegisterMessage };
+            return this.Ok(response);
         }
 
         [HttpPost]
@@ -52,20 +58,19 @@
             var user = await this.userManager.FindByNameAsync(model.UserName);
             if (user == null)
             {
-                return this.Unauthorized();
+                return this.Unauthorized(new ErrorResponseModel { Error = Error.InvalidCredentials });
             }
 
             var passwordValid = await this.userManager.CheckPasswordAsync(user, model.Password);
             if (!passwordValid)
             {
-                return this.Unauthorized();
+                return this.Unauthorized(new ErrorResponseModel { Error = Error.InvalidCredentials });
             }
 
             var token = this.identity.GenerateJwtToken(
                 user.Id,
                 user.UserName,
                 this.appSettings.Secret);
-
             return new LoginResponseModel
             {
                 Token = token,

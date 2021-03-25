@@ -1,22 +1,23 @@
 ﻿namespace Movies.Server.Infrastructure.Services
 {
+    using Utilities;
     public class Result
     {
         public bool Succeeded { get; private set; }
 
         public bool Failure => !this.Succeeded;
 
-        public string Error { get; private set; }
+        public ErrorResponseModel Error { get; private set; }
 
         public static implicit operator Result(bool succeeded)
-            => new ()
+            => new()
             { Succeeded = succeeded };
 
         public static implicit operator Result(string error)
-            => new ()
+            => new()
             {
                 Succeeded = false,
-                Error = error,
+                Error = new ErrorResponseModel { Error = error },
             };
     }
 }
