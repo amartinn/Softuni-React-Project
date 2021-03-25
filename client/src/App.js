@@ -1,12 +1,11 @@
 import Layout from './Components/Layout'
-import { BrowserRouter as Router } from 'react-router-dom'
-import { createBrowserHistory } from 'history'
-const history = createBrowserHistory()
+import RouteList from './Routes/routeList'
+
 function App() {
 	return (
-		<Router history={history}>
-			<Layout></Layout>
-		</Router>
+		<Layout>
+			<RouteList />
+		</Layout>
 	)
 }
 

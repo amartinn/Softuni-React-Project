@@ -1,10 +1,13 @@
 import { Link } from 'react-router-dom'
 import { BiCameraMovie as VideoIcon } from 'react-icons/bi'
+import { Typography } from '../Generic'
 import styles from './asideSection.module.css'
 const AsideSection = ({ title, links }) => {
 	return (
 		<section className={styles.section}>
-			<h2 className={styles['section-title']}>{title}</h2>
+			<Typography variant={'h2'} className={styles['section-title']}>
+				{title}
+			</Typography>
 			{links.map(link => {
 				return (
 					<Link
