@@ -1,9 +1,9 @@
 .footer{
     text-align: center;
     color: var(--base-text-color);
-    position: fixed;
+    /* position: fixed;
     bottom:0;
-    left:50%;
+    left:50%; */
     padding:15px;
 }
 .footer-title{
