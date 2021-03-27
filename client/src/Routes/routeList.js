@@ -1,7 +1,8 @@
-import { Switch, Route } from 'react-router-dom'
+import { Switch } from 'react-router-dom'
 import Register from '../Pages/Register'
 import Login from '../Pages/Login'
 import Home from '../Pages/Home'
+import Route from './AuthRoute'
 const RouteList = () => {
 	return (
 		<Switch>
