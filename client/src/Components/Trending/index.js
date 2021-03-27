@@ -26,8 +26,8 @@ class TrendingSection extends Component {
 	render() {
 		const { movies } = this.state
 		return (
-			<>
-				<div className={styles['trending-wrapper']}>
+			<div className={styles['trending-wrapper']}>
+				<div className={styles['trending-inner-wrapper']}>
 					<Typography className={styles['trending-title']} variant={'h2'}>
 						Trending
 					</Typography>
@@ -53,7 +53,7 @@ class TrendingSection extends Component {
 							return <MovieThumbnail key={movie.id} {...movie} />
 						})}
 				</section>
-			</>
+			</div>
 		)
 	}
 }

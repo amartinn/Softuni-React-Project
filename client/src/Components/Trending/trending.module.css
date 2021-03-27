@@ -1,9 +1,6 @@
 .trending-section{
     display: flex;
     overflow: auto;
-    width:82.3%;
-    margin: auto;
-    padding:40px;
 }
 
 .trending-section::-webkit-scrollbar {
@@ -17,7 +14,7 @@
 
 .trending-section::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background-color: var(--hover);
+    background-color: var(--secondary-text-color)
 }
 .switch-checked-icon{
     position: relative;
@@ -36,18 +33,22 @@
     color: var(--base-text-color);
 }
 .switch{
-    border:1px solid var(--hover);
-    height:32px;
+    border:2px solid var(--secondary-text-color);
     border-radius: 50px;
 }
 .trending-title{
-    padding-right:10px;
-    margin-top: 5px;
     color: var(--base-text-color);
     font-size: 20px;
+    margin-bottom: 20px;
     font-family: var(--primary-font);
 }
 .trending-wrapper{
-    margin-left: 160px;
-    display:flex
+    width: 80%;
+    margin: auto;
+    border: 3px solid var(--secondary-text-color);
+    padding: 40px;
+    border-radius: 30px;
+}
+.trending-inner-wrapper{
+    margin-bottom:20px;
 }

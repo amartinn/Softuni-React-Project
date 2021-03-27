@@ -1,13 +1,13 @@
 .thumbnail-wrapper {
-    width: 200px;
-    height: 300px;
+    width: 150px;
+    height: 200px;
     margin: 10px;
     position: relative;
 }
 
 .thumbnail {
-    width: 200px;
-    height: 300px;
+    width: 150px;
+    height: 200px;
     border-radius: 30px;
 }
 
@@ -15,8 +15,8 @@
     opacity: 0;
     position: absolute;
     background-color: none;
-    width: 200px;
-    height: 300px;
+    width: 150px;
+    height: 200px;
     border-radius: 30px;
     transition:0.3s;
 }
