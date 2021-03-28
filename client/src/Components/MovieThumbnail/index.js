@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { IMAGE_URL } from '../../../utilities/movieAPI/constants'
+import { IMAGE_URL } from '../../utilities/movieAPI/constants'
 import styles from './movieThumbnail.module.css'
 const MovieThumbnail = ({ id, poster_path, title }) => {
 	return (

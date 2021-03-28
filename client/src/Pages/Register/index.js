@@ -1,8 +1,7 @@
 import { Component } from 'react'
 import APP from '../../sources'
-import { Form } from '../../components/Generic'
+import { Form } from '../../Components/Generic'
 import { Link } from 'react-router-dom'
-
 import styles from './register.module.css'
 class RegisterPage extends Component {
 	constructor(props) {

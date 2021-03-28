@@ -1,8 +1,8 @@
 import { Switch, Route } from 'react-router-dom'
-import Register from '../pages/Register'
-import Login from '../pages/Login'
-import Home from '../pages/Home'
-import MovieDetails from '../pages/MovieDetails'
+import Register from '../Pages/Register'
+import Login from '../Pages/Login'
+import Home from '../Pages/Home'
+import MovieDetails from '../Pages/MovieDetails'
 import authHoc from '../hoc/authHoc'
 const RouteList = () => {
 	return (

@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import SearchForm from '../SearchForm'
 import styles from './header.module.css'
 import { connect } from 'react-redux'
-import * as userActions from '../../../actions/user'
+import * as userActions from '../../actions/user'
 import { bindActionCreators } from 'redux'
 const mapStateToProps = state => {
 	return { loggedIn: state.loggedIn }

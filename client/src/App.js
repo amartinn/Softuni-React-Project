@@ -1,5 +1,5 @@
-import { Layout } from './components/nav'
-import RouteList from './routes/routeList'
+import Layout from './Components/Layout'
+import RouteList from './Routes/routeList'
 
 function App() {
 	return (

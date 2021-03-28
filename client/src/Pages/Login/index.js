@@ -1,10 +1,11 @@
 import { Component } from 'react'
-import { Form } from '../../components/Generic'
+import { Form } from '../../Components/Generic'
 import { Link } from 'react-router-dom'
+import styles from './login.module.css'
 import { connect } from 'react-redux'
 import * as UserActions from '../../actions/user'
 import { bindActionCreators } from 'redux'
-import styles from './login.module.css'
+
 const mapDispatchToProps = dispatch => {
 	const actions = UserActions
 	const actionsMap = { actions: bindActionCreators(actions, dispatch) }

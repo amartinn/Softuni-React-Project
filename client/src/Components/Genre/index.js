@@ -1,4 +1,4 @@
-import genreText from '../../../utilities/genreHelper'
+import genreText from '../../utilities/genreHelper'
 import styles from './genre.module.css'
 const Genre = ({ id, ...other }) => {
 	const text = genreText(id)

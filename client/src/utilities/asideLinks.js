@@ -1,7 +1,6 @@
 const links = [
 	{
 		title: 'Menu',
-		link: '/',
 		links: [
 			{
 				to: '/topRated',
