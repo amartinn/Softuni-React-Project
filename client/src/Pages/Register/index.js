@@ -3,22 +3,6 @@ import APP from '../../sources'
 import { Form } from '../../Components/Generic'
 import { Link } from 'react-router-dom'
 import styles from './register.module.css'
-import { connect } from 'react-redux'
-import * as LoadingActions from '../../actions/loading'
-import { bindActionCreators } from 'redux'
-
-const mapStateToProps = state => {
-	return {
-		loggedIn: state.loggedIn,
-		loading: state.loading,
-	}
-}
-const mapDispatchToProps = dispatch => {
-	const actions = LoadingActions
-	const actionsMap = { actions: bindActionCreators(actions, dispatch) }
-	return actionsMap
-}
-
 class RegisterPage extends Component {
 	constructor(props) {
 		super(props)
@@ -56,12 +40,9 @@ class RegisterPage extends Component {
 			return
 		}
 		this.setState({ errors: [] })
-		const { setLoading } = this.props.actions
-		setLoading(true)
 		APP.user
 			.register(userName, email, password)
 			.then(message => {
-				setLoading(false)
 				this.props.history.push('/identity/login')
 			})
 			.catch(error => {
@@ -116,4 +97,4 @@ class RegisterPage extends Component {
 	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RegisterPage)
+export default RegisterPage
