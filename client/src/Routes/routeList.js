@@ -42,7 +42,7 @@ const RouteList = () => {
 				component={authHoc(GenericMovieListing)({
 					fetchFn: API.getUpcoming,
 					pageTitle: 'Upcoming Movies',
-				})(true)}
+				})(false)}
 			/>
 			<Route
 				auth
@@ -51,7 +51,7 @@ const RouteList = () => {
 				component={authHoc(GenericMovieListing)({
 					fetchFn: API.getTopRated,
 					pageTitle: 'Top Rated Movies',
-				})(true)}
+				})(false)}
 			/>
 			<Route
 				auth
@@ -60,7 +60,7 @@ const RouteList = () => {
 				component={authHoc(GenericMovieListing)({
 					fetchFn: API.getPopular,
 					pageTitle: 'Popular Movies',
-				})(true)}
+				})(false)}
 			/>
 			<Route
 				auth
@@ -69,7 +69,7 @@ const RouteList = () => {
 				component={authHoc(GenericMovieListing)({
 					fetchFn: API.getNowPlaying,
 					pageTitle: 'Now Playing Movies',
-				})(true)}
+				})(false)}
 			/>
 		</Switch>
 	)
