@@ -3,6 +3,8 @@ import APP from '../../sources'
 import { Form } from '../../components/Generic'
 import { Link } from 'react-router-dom'
 import styles from './register.module.css'
+import * as notificationHelper from '../../utilities/notifications'
+import * as notificationMessages from '../../utilities/notifications/messages'
 class RegisterPage extends Component {
 	constructor(props) {
 		super(props)
@@ -42,7 +44,8 @@ class RegisterPage extends Component {
 		this.setState({ errors: [] })
 		APP.user
 			.register(userName, email, password)
-			.then(message => {
+			.then(_ => {
+				notificationHelper.success(notificationMessages.REGISTER_MESSAGE)
 				this.props.history.push('/identity/login')
 			})
 			.catch(error => {

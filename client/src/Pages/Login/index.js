@@ -5,7 +5,8 @@ import styles from './login.module.css'
 import { connect } from 'react-redux'
 import * as UserActions from '../../actions/user'
 import { bindActionCreators } from 'redux'
-
+import * as notificationHelper from '../../utilities/notifications'
+import * as notificationMessages from '../../utilities/notifications/messages'
 const mapDispatchToProps = dispatch => {
 	const actions = UserActions
 	const actionsMap = { actions: bindActionCreators(actions, dispatch) }
@@ -45,6 +46,7 @@ class LoginPage extends Component {
 		this.props.actions
 			.login(userName, password)
 			.then(_ => {
+				notificationHelper.success(notificationMessages.LOGIN_MESSAGE)
 				this.props.history.push('/')
 			})
 			.catch(error => this.setState({ errors: [error] }))
