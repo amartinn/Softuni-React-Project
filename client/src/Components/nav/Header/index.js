@@ -4,6 +4,9 @@ import styles from './header.module.css'
 import { connect } from 'react-redux'
 import * as userActions from '../../../actions/user'
 import { bindActionCreators } from 'redux'
+import * as notificationHelper from '../../../utilities/notifications'
+import * as notificationMessages from '../../../utilities/notifications/messages'
+
 const mapStateToProps = state => {
 	return { loggedIn: state.loggedIn }
 }
@@ -15,6 +18,10 @@ const mapDispatchToProps = dispatch => {
 
 const Header = props => {
 	const { loggedIn } = props
+	const logoutHandler = () => {
+		notificationHelper.info(notificationMessages.LOGOUT_MESSAGE)
+		props.actions.logout()
+	}
 	return (
 		<header className={styles.header}>
 			<SearchForm />
@@ -23,7 +30,7 @@ const Header = props => {
 					{loggedIn ? (
 						<li className={styles['header-nav-list-item']}>
 							<button
-								onClick={() => props.actions.logout()}
+								onClick={logoutHandler}
 								className={styles['header-nav-link']}>
 								Logout
 							</button>
