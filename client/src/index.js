@@ -15,8 +15,12 @@ const history = createBrowserHistory()
 const middleware = routerMiddleware()
 
 const isLoggedIn = cookieHelper.getCookie('auth') !== null
+const browsed = localStorage.getItem('browsed')
 const initialState = {
 	loggedIn: isLoggedIn,
+	movies: {
+		browsed: browsed !== null ? JSON.parse(browsed) : [],
+	},
 }
 const store = configureStore(initialState, [middleware])
 

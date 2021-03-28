@@ -3,7 +3,9 @@ import Register from '../pages/Register'
 import Login from '../pages/Login'
 import Home from '../pages/Home'
 import MovieDetails from '../pages/MovieDetails'
+import BrowsedMovies from '../pages/BrowsedMovies'
 import authHoc from '../hoc/authHoc'
+import browsedHoc from '../hoc/browsedMoviesHoc'
 const RouteList = () => {
 	return (
 		<Switch>
@@ -14,7 +16,13 @@ const RouteList = () => {
 				auth
 				exact
 				path='/movies/:id'
-				component={authHoc(MovieDetails, true)}
+				component={authHoc(browsedHoc(MovieDetails), true)}
+			/>
+			<Route
+				auth
+				exact
+				path='/recent'
+				component={authHoc(BrowsedMovies, true)}
 			/>
 		</Switch>
 	)

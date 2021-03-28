@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 import user from './user'
-const reducers = { loggedIn: user }
+import movie from './movie'
+const reducers = { loggedIn: user, movies: movie }
 
 const combined = combineReducers(reducers)
 export default combined

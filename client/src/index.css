@@ -30,6 +30,9 @@ footer, header, nav, section, main{
   display: block;
 }
 
+button:focus{
+  outline: none;
+}
 body{
   line-height: 1;
 }
