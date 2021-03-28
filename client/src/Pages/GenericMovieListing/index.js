@@ -18,7 +18,11 @@ const GenericMovieListing = ({ fetchFn, pageTitle }) => {
 	const handlePageChange = ({ selected }) => {
 		const { pathname } = history.location
 		history.push(`/${pathname.split('/')[1]}/${selected + 1}`)
-		window.scrollTo(0, 0)
+		window.scrollTo({
+			top: 0,
+			left: 0,
+			behavior: 'smooth',
+		})
 	}
 	return (
 		<>
