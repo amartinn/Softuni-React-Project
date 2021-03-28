@@ -14,7 +14,6 @@ export const authHoc = WrappedComponent => props => (
 			const componentToString =
 				WrappedComponent?.WrappedComponent?.toString() ||
 				WrappedComponent.toString()
-
 			// checks if use tries to go back to login/register page when loggedIN
 			if (
 				(componentToString.includes('LoginPage') ||

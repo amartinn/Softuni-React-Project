@@ -13,8 +13,16 @@ const RouteList = () => {
 	return (
 		<Switch>
 			<Route exact path='/' component={Home} />
-			<Route exact path='/identity/register' component={authHoc(Register)} />
-			<Route exact path='/identity/login' component={authHoc(Login)} />
+			<Route
+				exact
+				path='/identity/register'
+				component={authHoc(Register)({})(false)}
+			/>
+			<Route
+				exact
+				path='/identity/login'
+				component={authHoc(Login)({})(false)}
+			/>
 			<Route
 				auth
 				exact
