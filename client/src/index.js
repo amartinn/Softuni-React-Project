@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
-import Loading from './Components/Loading'
+import Loading from './components/Loading'
 import './index.css'
 
 import configureStore from './stores'
@@ -9,14 +9,14 @@ import { Router } from 'react-router-dom'
 import { routerMiddleware } from 'react-router-redux'
 import { Provider } from 'react-redux'
 import { createBrowserHistory } from 'history'
-
+import * as cookieHelper from './utilities/cookieHelper'
 const history = createBrowserHistory()
 
 const middleware = routerMiddleware()
 
-const loggedIn = localStorage.getItem('_authToken') !== null
+const isLoggedIn = cookieHelper.getCookie('auth') !== null
 const initialState = {
-	loggedIn: loggedIn,
+	loggedIn: isLoggedIn,
 }
 const store = configureStore(initialState, [middleware])
 

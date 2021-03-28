@@ -29,11 +29,6 @@ namespace Movies.Server
                        .AllowAnyMethod()
                        .AllowAnyHeader();
             }));
-            //services.AddControllersWithViews();
-            //services.AddSpaStaticFiles(configuration =>
-            //{
-            //    configuration.RootPath = "../../client/build";
-            //});
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -53,20 +48,7 @@ namespace Movies.Server
                 .UseEndpoints(endpoints =>
                 {
                     endpoints.MapControllers();
-                });
-            //app.UseHttpsRedirection();
-            //app.UseStaticFiles();
-            //app.UseSpaStaticFiles();
-            //app.UseSpa(spa =>
-            //{
-            //    spa.Options.SourcePath = "../../client";
-
-            //    if (env.IsDevelopment())
-            //    {
-            //        spa.UseReactDevelopmentServer(npmScript: "start");
-            //    }
-            //});
-            app.ApplyMigrations();
+                }).ApplyMigrations();
         }
     }
 }

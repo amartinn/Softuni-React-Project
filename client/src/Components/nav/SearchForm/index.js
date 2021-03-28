@@ -1,8 +1,8 @@
 import { BiSearchAlt2 as SearchIcon } from 'react-icons/bi'
 import styles from './searchForm.module.css'
 import { useState, useEffect } from 'react'
-import * as API from '../../utilities/movieAPI'
-import Prediction from '../Prediction'
+import * as API from '../../../utilities/movieAPI'
+import { Prediction } from '../../movies'
 const SearchForm = () => {
 	const [query, setQuery] = useState('')
 	const [movies, setMovies] = useState([])

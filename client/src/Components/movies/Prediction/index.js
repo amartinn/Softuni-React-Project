@@ -1,4 +1,4 @@
-import * as API from '../../utilities/movieAPI'
+import * as API from '../../../utilities/movieAPI'
 import styles from './prediction.module.css'
 import { useHistory } from 'react-router-dom'
 const Prediction = ({

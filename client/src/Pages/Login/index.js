@@ -1,5 +1,5 @@
 import { Component } from 'react'
-import { Form } from '../../Components/Generic'
+import { Form } from '../../components/Generic'
 import { Link } from 'react-router-dom'
 import styles from './login.module.css'
 import { connect } from 'react-redux'

@@ -1,9 +1,7 @@
 import * as API from '../../utilities/movieAPI'
-import { Typography } from '../../Components/Generic'
-import Genre from '../../Components/Genre'
+import { Typography } from '../../components/Generic'
 import styles from './movieDetails.module.css'
-import Video from '../../Components/Video'
-import Modal from '../../Components/Modal'
+import { Video, Modal, Genre } from '../../components/movies'
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 const MovieDetails = props => {

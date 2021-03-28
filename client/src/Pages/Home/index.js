@@ -1,4 +1,4 @@
-import TrendingSection from '../../Components/Trending'
+import { TrendingSection } from '../../components/movies'
 const HomePage = () => {
 	return <TrendingSection />
 }

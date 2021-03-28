@@ -1,9 +1,9 @@
 import { Component } from 'react'
 import MovieThumbnail from '../MovieThumbnail'
 import styles from './trending.module.css'
-import { getTrending } from '../../utilities/movieAPI'
+import { getTrending } from '../../../utilities/movieAPI'
 import Switch from 'react-switch'
-import { Typography } from '../Generic'
+import { Typography } from '../../Generic'
 class TrendingSection extends Component {
 	constructor(props) {
 		super(props)
@@ -13,14 +13,14 @@ class TrendingSection extends Component {
 		}
 	}
 	componentDidMount() {
-		getTrending('day').then(({ results }) => {
-			this.setState({ movies: results })
+		getTrending('day').then(movies => {
+			this.setState({ movies })
 		})
 	}
 	handleChange = checked => {
 		const time_window = checked ? 'day' : 'week'
-		getTrending(time_window).then(({ results }) => {
-			this.setState({ checked, movies: results })
+		getTrending(time_window).then(movies => {
+			this.setState({ checked, movies })
 		})
 	}
 	render() {
