@@ -1,7 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
-import Loading from './Components/Loading'
+import Loading from './components/Loading'
+import * as cookieHelper from './utilities/cookieHelper'
+
 import './index.css'
 
 import configureStore from './stores'
@@ -14,7 +16,7 @@ const history = createBrowserHistory()
 
 const middleware = routerMiddleware()
 
-const loggedIn = localStorage.getItem('_authToken') !== null
+const loggedIn = cookieHelper.getCookie('auth') !== null
 const initialState = {
 	loggedIn: loggedIn,
 }

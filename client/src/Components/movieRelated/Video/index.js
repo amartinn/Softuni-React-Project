@@ -11,17 +11,21 @@ const options = {
 
 const Video = ({ searchTerm = '' }) => {
 	const [url, setUrl] = useState('')
-
+	const [notFound, setNotfound] = useState(false)
 	useEffect(() => {
 		TrailerAPI(searchTerm)
 			.then(url => {
 				const urlParams = new URLSearchParams(new URL(url).search)
 				setUrl(urlParams.get('v'))
 			})
-			.catch(err => console.log('Trailer is not available'))
+			.catch(err => setNotfound(true))
 	})
 
-	return url && <YouTube videoId={url} opt={options} />
+	return !notFound ? (
+		url && <YouTube videoId={url} opt={options} />
+	) : (
+		<h1>Trailer is not available</h1>
+	)
 }
 
 export default Video

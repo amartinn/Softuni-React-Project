@@ -1,4 +1,4 @@
-import AsideSection from '../../AsideSection'
+import AsideSection from '../AsideSection'
 import styles from './aside.module.css'
 import links from '../../../utilities/asideLinks'
 import { connect } from 'react-redux'
