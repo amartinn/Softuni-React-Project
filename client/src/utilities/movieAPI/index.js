@@ -23,3 +23,11 @@ export const getMovieImage = url => {
 		return IMAGE_URL + url
 	}
 }
+
+export const getMoviesBySearchQuery = (query, page = 1) => {
+	return HTTP.get(
+		`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&language=en-US&query=${query}&page=${page}&include_runtime=true`
+	).then(({ results }) => {
+		return results
+	})
+}
