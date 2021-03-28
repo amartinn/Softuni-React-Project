@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
-
+import Loading from './Components/Loading'
 import './index.css'
 
 import configureStore from './stores'
@@ -16,7 +16,6 @@ const middleware = routerMiddleware()
 
 const loggedIn = localStorage.getItem('_authToken') !== null
 const initialState = {
-	loading: false,
 	loggedIn: loggedIn,
 }
 const store = configureStore(initialState, [middleware])
@@ -24,6 +23,7 @@ const store = configureStore(initialState, [middleware])
 ReactDOM.render(
 	<Provider store={store}>
 		<Router history={history}>
+			<Loading />
 			<App />
 		</Router>
 	</Provider>,

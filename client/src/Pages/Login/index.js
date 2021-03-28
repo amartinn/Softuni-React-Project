@@ -3,18 +3,11 @@ import { Form } from '../../Components/Generic'
 import { Link } from 'react-router-dom'
 import styles from './login.module.css'
 import { connect } from 'react-redux'
-import * as LoadingActions from '../../actions/loading'
 import * as UserActions from '../../actions/user'
 import { bindActionCreators } from 'redux'
 
-const mapStateToProps = state => {
-	return {
-		loggedIn: state.loggedIn,
-		loading: state.loading,
-	}
-}
 const mapDispatchToProps = dispatch => {
-	const actions = Object.assign({}, UserActions, LoadingActions)
+	const actions = UserActions
 	const actionsMap = { actions: bindActionCreators(actions, dispatch) }
 	return actionsMap
 }
@@ -49,12 +42,9 @@ class LoginPage extends Component {
 			return
 		}
 		this.setState({ errors: [] })
-		const { setLoading } = this.props.actions
-		setLoading(true)
 		this.props.actions
 			.login(userName, password)
 			.then(_ => {
-				setLoading(false)
 				this.props.history.push('/')
 			})
 			.catch(error => this.setState({ errors: [error] }))
@@ -99,4 +89,4 @@ class LoginPage extends Component {
 	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPage)
+export default connect(null, mapDispatchToProps)(LoginPage)
