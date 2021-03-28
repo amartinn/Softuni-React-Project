@@ -4,8 +4,11 @@ import Login from '../pages/Login'
 import Home from '../pages/Home'
 import MovieDetails from '../pages/MovieDetails'
 import BrowsedMovies from '../pages/BrowsedMovies'
-import authHoc from '../hoc/authHoc'
+import { authHoc } from '../hoc/authHoc'
 import browsedHoc from '../hoc/browsedMoviesHoc'
+
+import GenericMovieListing from '../pages/GenericMovieListing'
+import * as API from '../utilities/movieAPI'
 const RouteList = () => {
 	return (
 		<Switch>
@@ -16,13 +19,49 @@ const RouteList = () => {
 				auth
 				exact
 				path='/movies/:id'
-				component={authHoc(browsedHoc(MovieDetails), true)}
+				component={authHoc(browsedHoc(MovieDetails))({})(true)}
 			/>
 			<Route
 				auth
 				exact
 				path='/recent'
-				component={authHoc(BrowsedMovies, true)}
+				component={authHoc(BrowsedMovies)({})(true)}
+			/>
+			<Route
+				auth
+				exact
+				path='/upcoming/:page?'
+				component={authHoc(GenericMovieListing)({
+					fetchFn: API.getUpcoming,
+					pageTitle: 'Upcoming Movies',
+				})(true)}
+			/>
+			<Route
+				auth
+				exact
+				path='/topRated/:page?'
+				component={authHoc(GenericMovieListing)({
+					fetchFn: API.getTopRated,
+					pageTitle: 'Top Rated Movies',
+				})(true)}
+			/>
+			<Route
+				auth
+				exact
+				path='/Popular/:page?'
+				component={authHoc(GenericMovieListing)({
+					fetchFn: API.getPopular,
+					pageTitle: 'Popular Movies',
+				})(true)}
+			/>
+			<Route
+				auth
+				exact
+				path='/playing/:page?'
+				component={authHoc(GenericMovieListing)({
+					fetchFn: API.getNowPlaying,
+					pageTitle: 'Now Playing Movies',
+				})(true)}
 			/>
 		</Switch>
 	)

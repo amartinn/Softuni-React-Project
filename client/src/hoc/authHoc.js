@@ -2,11 +2,10 @@ import { Component } from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 
-export default function authHoc(
-	WrappedComponent,
-	auth = false,
+export const authHoc = WrappedComponent => props => (
+	auth = true,
 	redirectTo = '/identity/login'
-) {
+) => {
 	const mapStateToProps = state => {
 		return { loggedIn: state.loggedIn }
 	}
@@ -38,7 +37,7 @@ export default function authHoc(
 				}
 			}
 			return renderFlag ? (
-				<WrappedComponent {...this.props} />
+				<WrappedComponent {...props} />
 			) : (
 				<Redirect
 					to={{
