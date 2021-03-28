@@ -31,3 +31,50 @@ export const getMoviesBySearchQuery = (query, page = 1) => {
 		return results
 	})
 }
+export const getUpcoming = (page = 1) => {
+	return HTTP.get(
+		`
+	https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}&language=en-US&page=${page}`
+	).then(({ results, total_pages }) => {
+		return {
+			movies: results,
+			totalPages: total_pages,
+		}
+	})
+}
+
+export const getTopRated = (page = 1) => {
+	return HTTP.get(
+		`
+	https://api.themoviedb.org/3/movie/top_rated?api_key=${apiKey}&language=en-US&page=${page}`
+	).then(({ results, total_pages }) => {
+		return {
+			movies: results,
+			totalPages: total_pages,
+		}
+	})
+}
+
+export const getPopular = (page = 1) => {
+	return HTTP.get(
+		`
+	https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&language=en-US&page=${page}`
+	).then(({ results, total_pages }) => {
+		return {
+			movies: results,
+			totalPages: total_pages,
+		}
+	})
+}
+
+export const getNowPlaying = (page = 1) => {
+	return HTTP.get(
+		`
+	https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=en-US&page=${page}`
+	).then(({ results, total_pages }) => {
+		return {
+			movies: results,
+			totalPages: total_pages,
+		}
+	})
+}

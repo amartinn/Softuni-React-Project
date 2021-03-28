@@ -12,10 +12,6 @@ const links = [
 				text: 'Popular Movies',
 			},
 			{
-				to: '/Latest',
-				text: 'Latest Movies',
-			},
-			{
 				to: '/playing',
 				text: 'Now Playing Movies',
 			},
