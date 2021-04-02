@@ -2,12 +2,51 @@ import * as API from '../../utilities/movieAPI'
 import { Typography } from '../../components/Generic'
 import styles from './movieDetails.module.css'
 import { Video, Modal, Genre } from '../../components/movies'
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { connect } from 'react-redux'
+import * as MovieActions from '../../actions/movie'
+import { bindActionCreators } from 'redux'
 import { useParams } from 'react-router-dom'
+
+import * as notificationHelper from '../../utilities/notifications'
+import * as notificationMessages from '../../utilities/notifications/messages'
+
+const mapStateToProps = state => {
+	return {
+		favorites: state.movies.favorites,
+	}
+}
+
+const mapDispatchToProps = dispatch => {
+	const actions = MovieActions
+	const actionsMap = { actions: bindActionCreators(actions, dispatch) }
+	return actionsMap
+}
+
 const MovieDetails = props => {
 	const { id } = useParams()
+	const [isFavorite, setIsFavorite] = useState(false)
+	const [isModalOpen, setIsModalOpen] = useState(false)
 	const [movie, setMovie] = useState({})
-	const [isModalOpen, setModalOpen] = useState(false)
+
+	const onClickHandler = () => {
+		const { actions } = props
+		if (!isFavorite) {
+			actions
+				.addToFavorite(id)
+				.then(_ =>
+					notificationHelper.success(notificationMessages.ADD_TO_FAVORITES)
+				)
+		} else {
+			actions
+				.removeFromFavorites(id)
+				.then(_ =>
+					notificationHelper.info(notificationMessages.REMOVE_FROM_FAVORITES)
+				)
+		}
+		setIsFavorite(previous => !previous)
+	}
+
 	useEffect(() => {
 		API.getMovieById(id).then(movie => {
 			let genres = movie.genres.map(x => {
@@ -17,7 +56,9 @@ const MovieDetails = props => {
 			setMovie(movie)
 		})
 	}, [id])
+
 	const { poster_path, title, release_date, runtime, genres, overview } = movie
+
 	return (
 		<section className={styles['movie-wrapper']}>
 			<img
@@ -46,16 +87,18 @@ const MovieDetails = props => {
 						{overview ?? 'No overview available.'}
 					</p>
 				</article>
-				<Modal isOpen={isModalOpen} closeModal={() => setModalOpen(false)}>
+				<Modal isOpen={isModalOpen} closeModal={() => setIsModalOpen(false)}>
 					<Video searchTerm={title} />
 				</Modal>
 				<button
 					className={styles['movie-details-btn']}
-					onClick={() => setModalOpen(true)}>
+					onClick={() => setIsModalOpen(true)}>
 					Trailer
 				</button>
-				<button className={styles['movie-details-btn']}>
-					Add To Favorites
+				<button
+					onClick={onClickHandler}
+					className={styles['movie-details-btn']}>
+					{isFavorite ? 'Remove from Favorites' : 'Add To Favorites'}
 				</button>
 				<textarea
 					placeholder={'your private notes about this movie...'}
@@ -66,4 +109,4 @@ const MovieDetails = props => {
 	)
 }
 
-export default MovieDetails
+export default connect(mapStateToProps, mapDispatchToProps)(MovieDetails)
