@@ -1,4 +1,4 @@
-import { REGISTER_USER, LOGIN_USER } from '../links'
+import { REGISTER_USER, LOGIN_USER, GET_USER_DATA } from '../links'
 import HTTP from '../HTTP'
 class User {
 	login(userName, password) {
@@ -30,6 +30,9 @@ class User {
 				}
 			})
 		})
+	}
+	getData() {
+		return HTTP.get(GET_USER_DATA)
 	}
 }
 

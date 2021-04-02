@@ -1,15 +1,25 @@
 import fetch from 'isomorphic-fetch'
 import { trackPromise } from 'react-promise-tracker'
+import * as cookieHelper from '../utilities/cookieHelper'
+
 class HTTP {
+	get headers() {
+		const token = cookieHelper.getCookie('auth')
+		const headers = {
+			'Content-Type': 'application/json',
+		}
+		if (token) {
+			headers['Authorization'] = `Bearer ${token}`
+		}
+		return headers
+	}
 	post(url, body) {
 		const jsonBody = JSON.stringify(body)
 		return trackPromise(
 			fetch(url, {
 				method: 'POST',
 				body: jsonBody,
-				headers: {
-					'Content-Type': 'application/json',
-				},
+				headers: this.headers,
 			}).then(res => res.json())
 		)
 	}
@@ -17,9 +27,7 @@ class HTTP {
 		return trackPromise(
 			fetch(url, {
 				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json',
-				},
+				headers: this.headers,
 			}).then(res => res.json())
 		)
 	}
@@ -29,10 +37,8 @@ class HTTP {
 			fetch(url, {
 				method: 'DELETE',
 				body: jsonBody,
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			}).then(res => res.json())
+				headers: this.headers,
+			})
 		)
 	}
 	put(url, body) {
@@ -41,9 +47,7 @@ class HTTP {
 			fetch(url, {
 				method: 'PUT',
 				body: jsonBody,
-				headers: {
-					'Content-Type': 'application/json',
-				},
+				headers: this.headers,
 			}).then(res => res.json())
 		)
 	}
